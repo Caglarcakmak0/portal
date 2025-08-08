@@ -1,5 +1,4 @@
 // Feature Components Export
-export { default as ActiveGoals } from './ActiveGoals';
-export { default as QuickActions } from './QuickActions';
-export { default as RecentActivity } from './RecentActivity';
-export { StudyTimer, TimerDisplay } from './StudyTimer';
+// Genel kullanım için feature bileşenleri buraya eklenir
+// Örnek: export { default as SearchBar } from './SearchBar';
+// Örnek: export { default as UserCard } from './UserCard';

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Form, Input, Button, Space, Typography, message, Row, Col, Avatar, Progress } from 'antd';
 import { UserOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
-import { useAuth } from '../contexts/AuthContext';
-import { apiRequest } from '../services/api';
+import { useAuth } from '../../contexts/AuthContext';
+import { apiRequest } from '../../services/api';
 
 const { Title, Text } = Typography;
 

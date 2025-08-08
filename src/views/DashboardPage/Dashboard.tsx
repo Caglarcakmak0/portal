@@ -14,9 +14,9 @@ import {
   TrophyOutlined,
   LineChartOutlined
 } from '@ant-design/icons';
-import { useAuth } from '../contexts/AuthContext';
-import { apiRequest } from '../services/api';
-import { ActiveGoals, QuickActions, StudyTimer } from './feature';
+import { useAuth } from '../../contexts/AuthContext';
+import { apiRequest } from '../../services/api';
+import { ActiveGoals, QuickActions } from './bones';
 
 const { Title, Text } = Typography;
 

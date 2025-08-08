@@ -30,8 +30,8 @@ import {
   CameraOutlined,
   LoadingOutlined
 } from '@ant-design/icons';
-import { useAuth } from '../contexts/AuthContext';
-import { apiRequest } from '../services/api';
+import { useAuth } from '../../contexts/AuthContext';
+import { apiRequest } from '../../services/api';
 
 const { Title, Text } = Typography;
 const { Option } = Select;

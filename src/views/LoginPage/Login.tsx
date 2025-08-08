@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react' // useEffect hook'unu ekle
 import { Form, Input, Button, Card, Typography, message, Spin, Checkbox } from 'antd' // Checkbox ekle
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
-import { rememberMeService } from '../services/rememberMe' // Remember Me servisini import et
+import { useAuth } from '../../contexts/AuthContext'
+import { rememberMeService } from '../../services/rememberMe' // Remember Me servisini import et
 
 const { Title, Text } = Typography
 

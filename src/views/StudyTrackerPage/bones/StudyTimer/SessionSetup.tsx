@@ -120,13 +120,13 @@ const SessionSetup: React.FC<SessionSetupProps> = ({
   useEffect(() => {
     if (visible) {
       const defaultConfig = {
-        technique: null,
-        subject: null,
-        studyDuration: null,
-        breakDuration: null,
-        targetSessions: null,
-        longBreakInterval: null,
-        longBreakDuration: null,
+        technique: 'Pomodoro',
+        subject: 'matematik',
+        studyDuration: 25,
+        breakDuration: 5,
+        targetSessions: 4,
+        longBreakInterval: 4,
+        longBreakDuration: 15,
         ...initialConfig
       };
       
@@ -342,9 +342,9 @@ const SessionSetup: React.FC<SessionSetupProps> = ({
                 <ClockCircleOutlined />
                 <span>Çalışma Süresi (dakika)</span>
               </Space>
-            } name="studyDuration" rules={[{ required: true, min: 5, max: 180, type: 'number' }]}>
+            } name="studyDuration" rules={[{ required: true, min: 1, max: 180, type: 'number' }]}>
               <InputNumber
-                min={5}
+                min={1}
                 max={180}
                 placeholder="Dakika seçin veya yukarıdan seç"
                 style={{ width: '100%' }}

@@ -1,0 +1,162 @@
+.session-feedback {
+  .session-feedback__summary {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .session-feedback__section {
+    padding: 16px 0;
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
+
+  .session-feedback__label {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #262626;
+    display: flex;
+    align-items: center;
+  }
+}
+
+// QualityRating styles
+.quality-rating {
+  text-align: center;
+  
+  .quality-rating__label {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #262626;
+  }
+
+  .quality-rating__text {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .ant-rate {
+    .ant-rate-star {
+      font-size: 24px;
+      margin-right: 8px;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+// MoodSelector styles
+.mood-selector {
+  .mood-selector__label {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #262626;
+  }
+
+  .mood-selector__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    
+    .ant-btn {
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+// DistractionCounter styles
+.distraction-counter {
+  .distraction-counter__label {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #262626;
+    display: flex;
+    align-items: center;
+  }
+
+  .distraction-counter__level {
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .distraction-counter__hint {
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  .ant-input-number {
+    .ant-input-number-input {
+      text-align: center;
+      font-weight: 600;
+    }
+  }
+
+  .ant-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:disabled {
+      color: #d9d9d9;
+      border-color: #d9d9d9;
+    }
+  }
+}
+
+// Modal specific styles
+.ant-modal {
+  .ant-modal-header {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 16px 24px;
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .ant-modal-footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 16px 24px;
+    text-align: right;
+    
+    .ant-btn {
+      margin-left: 8px;
+      
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .mood-selector__options {
+    .ant-btn {
+      flex: 1;
+      min-width: calc(50% - 4px);
+    }
+  }
+
+  .session-feedback__section {
+    padding: 12px 0;
+  }
+
+  .ant-modal {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+  }
+}

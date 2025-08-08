@@ -9,7 +9,9 @@ import {
 } from '@ant-design/icons';
 import TimerDisplay from './TimerDisplay';
 import SessionSetup, { StudySessionConfig } from './SessionSetup';
+import SessionFeedback from './SessionFeedback';
 import './StudyTimer.scss';
+import './SessionFeedback.scss';
 
 // StudySessionConfig'i SessionSetup'dan import ettik
 
@@ -24,6 +26,14 @@ interface StudyTimerProps {
 
 type TimerState = 'idle' | 'running' | 'paused' | 'break' | 'completed';
 type TimerMode = 'study' | 'break' | 'paused';
+type MoodType = 'Enerjik' | 'Normal' | 'Yorgun' | 'Motivasyonsuz' | 'Stresli' | 'Mutlu';
+
+interface SessionFeedbackData {
+  quality: number;
+  mood: MoodType;
+  distractions: number;
+  notes: string;
+}
 
 const StudyTimer: React.FC<StudyTimerProps> = ({ 
   size = 'large', 
@@ -52,9 +62,11 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
 
   // Modal state
   const [showSetup, setShowSetup] = useState<boolean>(false);
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [pendingSessionData, setPendingSessionData] = useState<any>(null);
 
   // Timer reference
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
 
   // Timer mode hesaplama
@@ -119,11 +131,12 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
     setShowSetup(true);
   };
 
+
   // Session setup onaylandığında
   const handleSetupConfirm = (newConfig: StudySessionConfig) => {
-    // Validation
-    if (!newConfig.studyDuration || newConfig.studyDuration < 5 || newConfig.studyDuration > 180) {
-      message.error('Çalışma süresi 5-180 dakika arasında olmalıdır!');
+    // Validation - 5 saniye için özel izin
+    if (!newConfig.studyDuration || newConfig.studyDuration < 1 || newConfig.studyDuration > 180) {
+      message.error('Çalışma süresi 5 saniye - 180 dakika arasında olmalıdır!');
       return;
     }
     
@@ -131,6 +144,45 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
     setConfig(newConfig);
     setShowSetup(false);
     message.success(`${newConfig.technique} ayarları güncellendi! 🎯`);
+  };
+
+  // Session feedback onaylandığında
+  const handleFeedbackSubmit = (feedbackData: SessionFeedbackData) => {
+    if (!pendingSessionData) return;
+
+    const completeSessionData = {
+      ...pendingSessionData,
+      quality: feedbackData.quality,
+      mood: feedbackData.mood,
+      distractions: feedbackData.distractions,
+      notes: feedbackData.notes
+    };
+
+    // Session data'yı callback'e gönder
+    onSessionComplete?.(completeSessionData);
+    
+    // Modal'ı kapat ve pending data'yı temizle
+    setShowFeedback(false);
+    setPendingSessionData(null);
+  };
+
+  // Feedback modal'ını kapatma
+  const handleFeedbackCancel = () => {
+    if (!pendingSessionData) return;
+
+    // Varsayılan değerlerle session'ı tamamla
+    const completeSessionData = {
+      ...pendingSessionData,
+      quality: 3, // Varsayılan orta kalite
+      mood: 'Normal' as MoodType,
+      distractions: 0,
+      notes: ''
+    };
+
+    onSessionComplete?.(completeSessionData);
+    
+    setShowFeedback(false);
+    setPendingSessionData(null);
   };
 
   // Timer logic - useEffect
@@ -157,15 +209,16 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
                 setState('completed');
                 message.success(`🏆 Tüm ${config.technique} sessionları tamamlandı!`);
                 
-                // Session data'yı callback'e gönder
-                onSessionComplete?.({
-                  technique: config.technique,
+                // Session data'yı pending olarak sakla
+                const actualDuration = completedSessions * config.studyDuration; // Gerçekte tamamlanan sessionlar
+                const sessionData = {
                   subject: config.subject,
-                  totalStudyTime: config.studyDuration * config.targetSessions,
-                  completedSessions: config.targetSessions,
-                  startTime: startTimeRef.current,
-                  endTime: Date.now()
-                });
+                  duration: Math.max(1, actualDuration > 0 ? actualDuration : config.studyDuration), // En az 1 dakika
+                  date: new Date(),
+                  technique: config.technique
+                };
+                setPendingSessionData(sessionData);
+                setShowFeedback(true);
                 
                 return 0;
               }
@@ -211,7 +264,7 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
           <Button
             type="primary"
             icon={<PlayCircleOutlined />}
-            size={size === 'large' ? 'large' : 'default'}
+            size={size === 'large' ? 'large' : 'middle'}
             onClick={startTimer}
           >
             {isIdle ? 'Başlat' : 'Devam Et'}
@@ -222,7 +275,7 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
         {isRunning && (
           <Button
             icon={<PauseCircleOutlined />}
-            size={size === 'large' ? 'large' : 'default'}
+            size={size === 'large' ? 'large' : 'middle'}
             onClick={pauseTimer}
           >
             Duraklat
@@ -234,7 +287,7 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
           <Button
             danger
             icon={<StopOutlined />}
-            size={size === 'large' ? 'large' : 'default'}
+            size={size === 'large' ? 'large' : 'middle'}
             onClick={stopTimer}
           >
             Durdur
@@ -245,7 +298,7 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
         {(isRunning || isPaused) && (
           <Button
             icon={<ReloadOutlined />}
-            size={size === 'large' ? 'large' : 'default'}
+            size={size === 'large' ? 'large' : 'middle'}
             onClick={resetTimer}
           >
             Sıfırla
@@ -256,12 +309,13 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
         {isIdle && (
           <Button
             icon={<SettingOutlined />}
-            size={size === 'large' ? 'large' : 'default'}
+            size={size === 'large' ? 'large' : 'middle'}
             onClick={openSettings}
           >
             Ayarlar
           </Button>
         )}
+
       </Space>
     );
   };
@@ -311,6 +365,20 @@ const StudyTimer: React.FC<StudyTimerProps> = ({
         onCancel={() => setShowSetup(false)}
         onConfirm={handleSetupConfirm}
         initialConfig={config}
+      />
+
+      {/* Session Feedback Modal */}
+      <SessionFeedback
+        visible={showFeedback}
+        onCancel={handleFeedbackCancel}
+        onSubmit={handleFeedbackSubmit}
+        sessionData={pendingSessionData ? {
+          subject: pendingSessionData.subject,
+          technique: pendingSessionData.technique,
+          duration: pendingSessionData.duration,
+          targetSessions: config.targetSessions,
+          completedSessions: completedSessions
+        } : undefined}
       />
     </>
   );

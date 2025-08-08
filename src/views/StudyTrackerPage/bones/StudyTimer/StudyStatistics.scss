@@ -1,0 +1,111 @@
+.study-statistics {
+  .ant-statistic {
+    .ant-statistic-title {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+    
+    .ant-statistic-content {
+      font-size: 16px;
+      
+      .ant-statistic-content-value {
+        font-weight: 600;
+      }
+    }
+  }
+
+  // Progress dashboard in weekly goal
+  .ant-progress-circle {
+    .ant-progress-text {
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .ant-statistic-content {
+      font-size: 14px;
+    }
+    
+    .ant-progress-circle {
+      width: 80px !important;
+      height: 80px !important;
+    }
+  }
+
+  // List items styling
+  .ant-list-item-meta-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .ant-list-item-meta-description {
+    font-size: 12px;
+  }
+
+  // Progress bars in lists
+  .ant-progress-line {
+    .ant-progress-bg {
+      height: 6px;
+    }
+  }
+
+  // Card hover effects
+  .ant-card {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Header controls
+  .ant-select {
+    min-width: 100px;
+  }
+
+  // Export button styling
+  .ant-btn-dashed {
+    border-style: dashed;
+    
+    &:hover {
+      border-color: #40a9ff;
+      color: #40a9ff;
+    }
+  }
+}
+
+// Tab specific styling
+.study-timer-tabs {
+  .ant-tabs-nav {
+    margin-bottom: 16px;
+  }
+
+  .ant-tabs-tab {
+    padding: 8px 16px;
+    
+    .anticon {
+      margin-right: 6px;
+    }
+  }
+
+  .ant-tabs-content-holder {
+    .ant-tabs-content {
+      .ant-tabs-tabpane {
+        padding: 0;
+      }
+    }
+  }
+}
+
+// Responsive tabs
+@media (max-width: 768px) {
+  .study-timer-tabs {
+    .ant-tabs-tab {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+}

@@ -1,0 +1,213 @@
+.study-calendar {
+  .ant-picker-calendar {
+    .ant-picker-panel {
+      background: transparent;
+      border: none;
+    }
+
+    .ant-picker-calendar-header {
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 16px;
+    }
+
+    // Calendar day cells
+    .ant-picker-cell {
+      &:hover {
+        background: #f5f5f5;
+      }
+    }
+
+    .ant-picker-cell-inner {
+      position: relative;
+      width: 100%;
+      height: 60px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      
+      &:hover {
+        background: #f0f9ff;
+      }
+    }
+
+    // Calendar day content
+    .calendar-day-content {
+      position: absolute;
+      bottom: 2px;
+      left: 2px;
+      right: 2px;
+      z-index: 1;
+      
+      &:hover {
+        background-color: rgba(24, 144, 255, 0.1) !important;
+        border-color: #40a9ff !important;
+        transform: scale(1.05);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    // Month view cells (for year view)
+    .ant-picker-cell-in-view {
+      .month-cell-content {
+        text-align: center;
+        padding: 8px;
+        font-size: 12px;
+        color: #666;
+        background: #f0f9ff;
+        border-radius: 4px;
+        margin: 4px;
+        
+        &:hover {
+          background: #e6f7ff;
+          transform: translateY(-1px);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    // Today highlight
+    .ant-picker-cell-today .ant-picker-cell-inner {
+      border: 2px solid #1890ff;
+    }
+
+    // Selected cell
+    .ant-picker-cell-selected .ant-picker-cell-inner {
+      background: #e6f7ff;
+      border: 2px solid #40a9ff;
+    }
+
+    // Weekend styling
+    .ant-picker-cell-week-panel-cell:nth-child(6),
+    .ant-picker-cell-week-panel-cell:nth-child(7) {
+      .ant-picker-cell-inner {
+        background: #fafafa;
+      }
+    }
+  }
+
+  // Statistics cards hover effect
+  .ant-card {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+  }
+
+  // Color legend styling
+  .ant-card .ant-card-body {
+    padding: 16px;
+  }
+
+  // Header controls styling
+  .ant-select {
+    min-width: 80px;
+  }
+
+  .ant-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Modal styling
+.ant-modal {
+  .ant-modal-header {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 16px 24px;
+  }
+
+  .ant-modal-body {
+    padding: 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+// List item styling in modal
+.ant-list {
+  .ant-list-header {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .ant-list-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f5f5;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .ant-list-item-meta-title {
+      margin-bottom: 4px;
+    }
+
+    .ant-list-item-meta-description {
+      color: #666;
+      
+      .ant-tag {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .study-calendar {
+    .ant-col:first-child {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .study-calendar {
+    .ant-picker-calendar {
+      .ant-picker-cell-inner {
+        height: 50px;
+      }
+
+      .calendar-day-content {
+        font-size: 8px;
+        padding: 1px;
+      }
+    }
+
+    .ant-statistic {
+      .ant-statistic-title {
+        font-size: 11px;
+      }
+      
+      .ant-statistic-content {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .ant-modal {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+    
+    .ant-modal-body {
+      padding: 16px;
+    }
+  }
+}
+
+// Dark mode support (if needed)
+@media (prefers-color-scheme: dark) {
+  .study-calendar {
+    .calendar-day-content {
+      border-color: rgba(255, 255, 255, 0.2);
+      
+      &:hover {
+        background-color: rgba(24, 144, 255, 0.2) !important;
+      }
+    }
+  }
+}
