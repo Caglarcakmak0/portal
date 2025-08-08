@@ -1,0 +1,162 @@
+.timer-display {
+  &__header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+    
+    .ant-switch {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__circular {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .ant-progress-circle {
+      filter: drop-shadow(0 4px 12px rgba(24, 144, 255, 0.15));
+    }
+  }
+
+  &__pulse {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    animation: pulse 2s infinite;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &__digital {
+    text-align: center;
+    min-width: 200px;
+
+    &-time {
+      margin-bottom: 12px;
+      
+      .ant-typography {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &-progress {
+      margin-bottom: 8px;
+      
+      .ant-progress-line {
+        .ant-progress-bg {
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+
+  &__info {
+    margin-top: 16px;
+    padding: 8px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+
+    .ant-typography {
+      font-size: 12px;
+    }
+  }
+
+  // Size variants
+  &--small {
+    .timer-display__header {
+      margin-bottom: 12px;
+    }
+
+    .timer-display__info {
+      margin-top: 12px;
+      padding: 6px;
+    }
+
+    .timer-display__pulse {
+      width: 24px;
+      height: 24px;
+      top: -8px;
+      right: -8px;
+    }
+
+    .timer-display__digital {
+      min-width: 150px;
+    }
+  }
+
+  // Dark mode support
+  .dark & {
+    .timer-display__info {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .timer-display__pulse {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .ant-progress-circle-trail {
+      stroke: rgba(255, 255, 255, 0.06);
+    }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .timer-display--large {
+    .timer-display__circular {
+      .ant-progress-circle {
+        width: 160px !important;
+        height: 160px !important;
+      }
+    }
+
+    .timer-display__digital-time {
+      .ant-typography {
+        font-size: 2.5rem !important;
+      }
+    }
+  }
+}

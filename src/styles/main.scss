@@ -1,0 +1,36 @@
+// Import variables and mixins
+@import 'variables';
+@import 'mixins';
+
+// Global styles
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $text-primary;
+  background-color: $bg-secondary;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+// Reset
+html, body, #root {
+  height: 100%;
+}
+
+// Utility classes
+.text-center {
+  text-align: center;
+}
+
+.mt-sm { margin-top: $spacing-sm; }
+.mt-md { margin-top: $spacing-md; }
+.mt-lg { margin-top: $spacing-lg; }
+.mb-sm { margin-bottom: $spacing-sm; }
+.mb-md { margin-bottom: $spacing-md; }
+.mb-lg { margin-bottom: $spacing-lg; }

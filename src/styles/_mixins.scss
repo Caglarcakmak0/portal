@@ -1,0 +1,59 @@
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Card mixin
+@mixin card-style {
+  background: $bg-primary;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: $spacing-lg;
+}
+
+// Button mixins
+@mixin button-base {
+  border: none;
+  border-radius: $border-radius;
+  padding: $spacing-sm $spacing-md;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: $font-size;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// Responsive breakpoints
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: 769px) and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1025px) {
+    @content;
+  }
+}
