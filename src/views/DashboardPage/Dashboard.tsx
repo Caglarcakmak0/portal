@@ -17,7 +17,7 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { apiRequest } from '../../services/api';
 import { ActiveGoals, QuickActions } from './bones';
-
+import StudyTimer from '../StudyTrackerPage/bones/StudyTimer/StudyTimer';
 const { Title, Text } = Typography;
 
 interface DashboardData {
