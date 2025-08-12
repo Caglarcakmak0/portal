@@ -34,3 +34,44 @@ html, body, #root {
 .mb-sm { margin-bottom: $spacing-sm; }
 .mb-md { margin-bottom: $spacing-md; }
 .mb-lg { margin-bottom: $spacing-lg; }
+
+// Mikro animasyonlar ve etkileşimli geçişler
+@keyframes app-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.app-fade-in {
+  animation: app-fade-in 240ms ease-out both;
+}
+
+// Kart ve liste öğelerinde hafif hover hareketi
+.ant-card {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+
+.ant-list-item {
+  transition: background-color 0.15s ease;
+}
+
+
+// Tablo satırlarında hafif hover vurgusu
+
+// Butonlarda mikro hareket
+.ant-btn {
+  transition: transform 0.12s ease, box-shadow 0.2s ease;
+}
+
+.ant-btn:hover {
+  transform: translateY(-1px);
+}
+
+.ant-btn:active {
+  transform: translateY(0);
+}
+
+// Mobilde projeyi geçici olarak gizle (şimdilik)
+@media (max-width: 768px) {
+  #root { display: none !important; }
+}

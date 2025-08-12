@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Button, Avatar, Typography, Dropdown, Badge, Tooltip } from 'antd';
+import { Layout, Menu, Button, Avatar, Typography, Dropdown, Badge, Tooltip, Breadcrumb } from 'antd';
 import {
   AimOutlined,
   SettingOutlined,
@@ -15,7 +15,8 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTheme } from '../../../contexts/ThemeContext';
-import { routeMenu, getPageTitle } from '../../../config/routeMenu';
+import { getPageTitle, getRouteMenuByRole } from '../../../routes/routeMenu';
+import { toAbsoluteUrl } from '../../../services/api';
 
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
@@ -31,6 +32,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const location = useLocation();
   const { user, logout } = useAuth();
   const { themeMode, isDark, toggleTheme } = useTheme();
+  
+  // Get role-based menu items
+  const menuItems = getRouteMenuByRole(user?.role);
 
   // Menu click handler
   const handleMenuClick = ({ key }: { key: string }) => {
@@ -114,6 +118,21 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     }
   }, [location.pathname]);
 
+  // Basit breadcrumb üretici (yalnızca iki seviyeli için yeterli)
+  const breadcrumbItems = React.useMemo(() => {
+    const path = location.pathname;
+    const parts = path.split('/').filter(Boolean);
+    const items = [
+      { title: 'Ana Sayfa', path: '/' },
+    ];
+    if (parts.length > 0) {
+      // Tam eşleşen başlık
+      const currentTitle = getPageTitle(path, menuItems as any);
+      items.push({ title: currentTitle, path });
+    }
+    return items;
+  }, [location.pathname, menuItems]);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {/* Sidebar */}
@@ -154,7 +173,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           selectedKeys={getSelectedMenuKey()}
           openKeys={openKeys}
           onOpenChange={handleOpenChange}
-          items={routeMenu}
+          items={menuItems}
           onClick={handleMenuClick}
           style={{ 
             border: 'none',
@@ -181,15 +200,19 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
               onClick={() => setCollapsed(!collapsed)}
               style={{ fontSize: '16px', width: '32px', height: '32px' }}
+              aria-label={collapsed ? 'Menüyü aç' : 'Menüyü kapat'}
             />
             
-            {/* Breadcrumb benzeri başlık */}
-            <div>
+            {/* Breadcrumb + Başlık */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <Breadcrumb
+                items={breadcrumbItems.map(b => ({ title: b.title }))}
+              />
               <Text strong style={{ 
                 fontSize: '16px',
                 color: isDark ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.88)'
               }}>
-                {getPageTitle(location.pathname)}
+                {getPageTitle(location.pathname, menuItems as any)}
               </Text>
             </div>
           </div>
@@ -206,16 +229,19 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                   border: 'none',
                   color: isDark ? '#fff' : '#000'
                 }}
+                aria-label="Tema değiştir"
               />
             </Tooltip>
 
             {/* Notifications */}
-            <Badge count={0} size="small">
+            {/* Gizli değerlendirme bekleniyor rozeti - sadece öğrenci için opsiyonel */}
+            <Badge count={user?.role === 'student' ? 1 : 0} size="small">
               <Button
                 type="text"
                 icon={<BellOutlined />}
                 style={{ border: 'none' }}
-                disabled // Henüz hazır değil
+                aria-label="Bildirimler"
+                // İleride tıklayınca /student/coach sayfasına yönlendirilebilir
               />
             </Badge>
 
@@ -237,7 +263,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               onMouseEnter={(e) => e.currentTarget.style.background = '#f5f5f5'}
               onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <Avatar size={32} icon={<UserOutlined />} />
+                <Avatar size={32} src={toAbsoluteUrl(user?.avatar) || undefined} icon={<UserOutlined />} />
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                   <Text style={{ fontSize: '14px', lineHeight: 1.2 }}>
                     {user?.firstName && user?.lastName 
@@ -262,7 +288,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           background: isDark ? '#0f1419' : '#f5f5f5',
           borderRadius: '8px',
           overflow: 'auto'
-        }}>
+        }}
+          className="app-fade-in"
+        >
           {children}
         </Content>
       </Layout>

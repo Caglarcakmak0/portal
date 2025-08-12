@@ -18,6 +18,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { apiRequest } from '../../services/api';
 import { ActiveGoals, QuickActions } from './bones';
 import StudyTimer from '../StudyTrackerPage/bones/StudyTimer/StudyTimer';
+
 const { Title, Text } = Typography;
 
 interface DashboardData {
@@ -211,21 +212,6 @@ const Dashboard: React.FC = () => {
               </Row>
             </Card>
           )}
-          {/* Quick Actions */}
-          <QuickActions 
-            profileCompleteness={dashboardData?.overview.profileCompleteness}
-          />
-
-          {/* Dashboard Timer Widget */}
-          <StudyTimer 
-            size="small"
-            onSessionComplete={(data) => {
-              console.log('Dashboard session completed:', data);
-              // Session tamamlandığında verileri yenile
-              fetchDashboardData();
-            }}
-          />
-        
         </Space>
       )}
     </div>

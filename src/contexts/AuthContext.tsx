@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { message } from 'antd'; // Toast mesajları için
-import { AuthState, AuthContextType } from '../types/auth';
+import { AuthState, AuthContextType, User } from '../types/auth';
 import { authService } from '../services/authStore';
 import { setTokenExpireCallback } from '../services/api'; // API'den token expire callback'ini import et
 
@@ -55,6 +55,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (showMessage) {
       message.info('Çıkış yapıldı');
     }
+  };
+
+  // Kullanıcı bilgisini (örn. avatar, isim) güncelle ve persist et
+  const updateUser = (userData: Partial<User>) => {
+    setState(prev => {
+      const mergedUser = { ...(prev.user || {}), ...userData } as User;
+      try {
+        localStorage.setItem('user', JSON.stringify(mergedUser));
+      } catch {}
+      return { ...prev, user: mergedUser };
+    });
   };
 
   // Token expire durumunda otomatik refresh dene, başarısızsa logout
@@ -227,7 +238,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         ...state,
         login,
         logout,
-        checkAuth
+        checkAuth,
+        updateUser
       }}
     >
       {children}
@@ -242,4 +254,20 @@ export const useAuth = (): AuthContextType => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
+};
+
+// Role-based helper hooks
+export const useIsCoach = (): boolean => {
+  const { user } = useAuth();
+  return user?.role === 'coach';
+};
+
+export const useIsStudent = (): boolean => {
+  const { user } = useAuth();
+  return user?.role === 'student';
+};
+
+export const useIsAdmin = (): boolean => {
+  const { user } = useAuth();
+  return user?.role === 'admin';
 };

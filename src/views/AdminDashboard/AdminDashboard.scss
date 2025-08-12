@@ -1,0 +1,517 @@
+.admin-dashboard {
+  .dashboard-header {
+    background: linear-gradient(135deg, #fff1f0 0%, #ffa39e 100%);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: 1px solid #ff7875;
+  }
+
+  // Metric Cards
+  .metric-card {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+    
+    &.users {
+      background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+      border: 2px solid #69c0ff;
+      
+      .ant-statistic-content-value {
+        background: linear-gradient(45deg, #1890ff, #40a9ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+    
+    &.sessions {
+      background: linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%);
+      border: 2px solid #95de64;
+      
+      .ant-statistic-content-value {
+        background: linear-gradient(45deg, #52c41a, #73d13d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+    
+    &.questions {
+      background: linear-gradient(135deg, #fffbe6 0%, #fff1b8 100%);
+      border: 2px solid #ffec3d;
+      
+      .ant-statistic-content-value {
+        background: linear-gradient(45deg, #faad14, #ffc53d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+    
+    &.load {
+      background: linear-gradient(135deg, #f9f0ff 0%, #efdbff 100%);
+      border: 2px solid #d3adf7;
+      
+      .ant-statistic-content-value {
+        background: linear-gradient(45deg, #722ed1, #9254de);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+    
+    .ant-card-body {
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .ant-statistic {
+      .ant-statistic-title {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .ant-statistic-content {
+        .ant-statistic-content-value {
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 8px;
+        }
+        
+        .ant-statistic-content-prefix {
+          margin-right: 8px;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  // User Stat Cards
+  .user-stat {
+    text-align: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    &.students {
+      background: linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%);
+      border: 1px solid #95de64;
+    }
+    
+    &.coaches {
+      background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+      border: 1px solid #69c0ff;
+    }
+    
+    &.admins {
+      background: linear-gradient(135deg, #fff1f0 0%, #ffccc7 100%);
+      border: 1px solid #ff7875;
+    }
+    
+    &.growth {
+      background: linear-gradient(135deg, #f9f0ff 0%, #efdbff 100%);
+      border: 1px solid #d3adf7;
+    }
+    
+    .ant-card-body {
+      padding: 16px 12px;
+    }
+    
+    .ant-statistic {
+      .ant-statistic-title {
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+      
+      .ant-statistic-content-value {
+        font-size: 20px;
+      }
+    }
+  }
+
+  // Performance Metrics
+  .performance-metric {
+    text-align: center;
+    padding: 12px;
+    background: rgba(245, 245, 245, 0.5);
+    border-radius: 8px;
+    
+    .ant-typography:first-child {
+      font-size: 12px;
+      color: #8c8c8c;
+      margin-bottom: 4px;
+    }
+    
+    .ant-typography:last-child {
+      font-size: 10px;
+      color: #bfbfbf;
+      margin-top: 4px;
+    }
+  }
+
+  // Alert Enhancements
+  .ant-alert {
+    &.ant-alert-success {
+      background: linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%);
+      border: 1px solid #b7eb8f;
+      border-radius: 12px;
+      
+      .ant-alert-icon {
+        font-size: 18px;
+      }
+      
+      .ant-alert-message {
+        font-weight: 600;
+        font-size: 16px;
+      }
+    }
+  }
+
+  // Table Enhancements
+  .ant-table {
+    border-radius: 12px;
+    overflow: hidden;
+    
+    .ant-table-thead {
+      > tr > th {
+        background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #e8e8e8;
+      }
+    }
+    
+    .ant-table-tbody {
+      > tr {
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: linear-gradient(135deg, rgba(255, 77, 79, 0.02) 0%, rgba(255, 77, 79, 0.05) 100%);
+        }
+        
+        > td {
+          padding: 16px;
+          border-bottom: 1px solid #f0f0f0;
+          
+          .ant-avatar {
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          }
+          
+          .ant-tag {
+            border-radius: 12px;
+            font-weight: 500;
+            border: none;
+          }
+          
+          .ant-btn {
+            border-radius: 6px;
+            font-weight: 500;
+            
+            &.ant-btn-primary {
+              background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+              border: none;
+              
+              &:hover {
+                background: linear-gradient(135deg, #cf1322 0%, #ff4d4f 100%);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+              }
+            }
+            
+            &.ant-btn-dangerous {
+              color: #ff4d4f;
+              border-color: #ff4d4f;
+              
+              &:hover {
+                background: #ff4d4f;
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Form Enhancements
+  .ant-form {
+    .ant-form-item {
+      margin-bottom: 16px;
+      
+      .ant-form-item-label {
+        padding-bottom: 4px;
+        
+        label {
+          font-weight: 600;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  // Switch Enhancements
+  .ant-switch {
+    &.ant-switch-checked {
+      background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+    }
+  }
+
+  // Drawer Enhancements
+  .ant-drawer {
+    .ant-drawer-header {
+      background: linear-gradient(135deg, #fff1f0 0%, #ffa39e 100%);
+      border-bottom: 2px solid #ff7875;
+      
+      .ant-drawer-title {
+        font-weight: 600;
+        color: #262626;
+      }
+    }
+    
+    .ant-drawer-body {
+      padding: 24px;
+      background: #fafafa;
+    }
+  }
+
+  // List Enhancements
+  .ant-list {
+    .ant-list-item {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid #f0f0f0;
+      
+      &:hover {
+        background: rgba(255, 77, 79, 0.02);
+        border-color: #ff7875;
+      }
+    }
+  }
+
+  // Progress Enhancements
+  .ant-progress {
+    .ant-progress-outer {
+      .ant-progress-inner {
+        background: rgba(0, 0, 0, 0.06);
+        border-radius: 8px;
+        
+        .ant-progress-bg {
+          border-radius: 8px;
+          transition: all 0.5s ease;
+        }
+      }
+    }
+  }
+}
+
+// Dark Mode
+.dark {
+  .admin-dashboard {
+    .dashboard-header {
+      background: linear-gradient(135deg, #2a1a1a 0%, #3a2a2a 100%);
+      border-color: #cf1322;
+    }
+    
+    .metric-card {
+      &.users {
+        background: linear-gradient(135deg, #1e2a3a 0%, #2a3a4a 100%);
+        border-color: #1677ff;
+      }
+      
+      &.sessions {
+        background: linear-gradient(135deg, #1a2a1a 0%, #2a3a2a 100%);
+        border-color: #389e0d;
+      }
+      
+      &.questions {
+        background: linear-gradient(135deg, #3a2a1a 0%, #4a3a2a 100%);
+        border-color: #d48806;
+      }
+      
+      &.load {
+        background: linear-gradient(135deg, #2a1a3a 0%, #3a2a4a 100%);
+        border-color: #531dab;
+      }
+    }
+    
+    .user-stat {
+      &.students {
+        background: linear-gradient(135deg, #1a2a1a 0%, #2a3a2a 100%);
+        border-color: #389e0d;
+      }
+      
+      &.coaches {
+        background: linear-gradient(135deg, #1e2a3a 0%, #2a3a4a 100%);
+        border-color: #1677ff;
+      }
+      
+      &.admins {
+        background: linear-gradient(135deg, #3a1a1a 0%, #4a2a2a 100%);
+        border-color: #cf1322;
+      }
+      
+      &.growth {
+        background: linear-gradient(135deg, #2a1a3a 0%, #3a2a4a 100%);
+        border-color: #531dab;
+      }
+    }
+    
+    .performance-metric {
+      background: rgba(255, 255, 255, 0.04);
+    }
+    
+    .ant-table {
+      background: #262626;
+      
+      .ant-table-thead > tr > th {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        color: #f0f0f0;
+        border-color: #434343;
+      }
+      
+      .ant-table-tbody > tr {
+        background: #262626;
+        color: #f0f0f0;
+        
+        > td {
+          border-color: #434343;
+          color: #f0f0f0;
+        }
+      }
+    }
+    
+    .ant-drawer {
+      .ant-drawer-header {
+        background: linear-gradient(135deg, #2a1a1a 0%, #3a2a2a 100%);
+        border-color: #cf1322;
+        
+        .ant-drawer-title {
+          color: #f0f0f0;
+        }
+      }
+      
+      .ant-drawer-body {
+        background: #1f1f1f;
+      }
+    }
+  }
+}
+
+// Mobile Responsive
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 16px;
+    
+    .dashboard-header {
+      padding: 16px;
+      margin-bottom: 16px;
+      
+      .ant-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .ant-typography h2 {
+        font-size: 18px;
+      }
+    }
+    
+    .metric-card {
+      margin-bottom: 12px;
+      
+      .ant-card-body {
+        padding: 12px;
+      }
+      
+      .ant-statistic-content-value {
+        font-size: 20px;
+      }
+    }
+    
+    .user-stat {
+      margin-bottom: 8px;
+      
+      .ant-card-body {
+        padding: 12px 8px;
+      }
+      
+      .ant-statistic-content-value {
+        font-size: 16px;
+      }
+    }
+    
+    .performance-metric {
+      padding: 8px;
+      margin-bottom: 8px;
+      
+      > div {
+        font-size: 14px;
+      }
+    }
+    
+    .ant-table {
+      .ant-table-thead > tr > th {
+        font-size: 10px;
+        padding: 8px 4px;
+      }
+      
+      .ant-table-tbody > tr > td {
+        padding: 12px 8px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-dashboard {
+    padding: 8px;
+    
+    .metric-card {
+      .ant-statistic-content-value {
+        font-size: 18px;
+      }
+      
+      .ant-statistic-title {
+        font-size: 10px;
+      }
+    }
+    
+    .user-stat {
+      .ant-statistic-content-value {
+        font-size: 14px;
+      }
+      
+      .ant-statistic-title {
+        font-size: 9px;
+      }
+    }
+    
+    .ant-btn {
+      padding: 2px 6px;
+      font-size: 11px;
+    }
+    
+    .performance-metric > div:first-child {
+      font-size: 12px;
+    }
+  }
+}

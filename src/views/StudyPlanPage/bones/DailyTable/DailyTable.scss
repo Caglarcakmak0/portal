@@ -1,0 +1,574 @@
+.daily-table {
+  .plan-summary {
+    background: linear-gradient(135deg, #f8fafc 0%, #e3f2fd 100%);
+    border: 1px solid #e1f5fe;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .ant-card-body {
+      padding: 20px;
+    }
+
+    .ant-statistic {
+      text-align: center;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: scale(1.02);
+      }
+      
+      .ant-statistic-title {
+        font-size: 12px;
+        color: #546e7a;
+        margin-bottom: 6px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .ant-statistic-content {
+        .ant-statistic-content-value {
+          font-size: 24px;
+          font-weight: 700;
+          background: linear-gradient(45deg, #1976d2, #42a5f5);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .ant-statistic-content-prefix {
+          margin-right: 8px;
+          font-size: 18px;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .overall-progress {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      border: 1px solid rgba(25, 118, 210, 0.1);
+
+      .ant-typography {
+        margin-bottom: 12px;
+        color: #37474f;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .ant-progress {
+        .ant-progress-outer {
+          .ant-progress-inner {
+            background: rgba(144, 202, 249, 0.2);
+            border-radius: 10px;
+            
+            .ant-progress-bg {
+              background: linear-gradient(90deg, #1976d2 0%, #42a5f5 50%, #4fc3f7 100%);
+              border-radius: 10px;
+              transition: all 0.5s ease;
+            }
+          }
+        }
+        
+        .ant-progress-text {
+          font-weight: 700;
+          color: #1976d2;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .subjects-table {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .ant-card-head {
+      background: linear-gradient(135deg, #263238 0%, #37474f 100%);
+      border: none;
+      
+      .ant-card-head-title {
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 16px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .subjects-table-content {
+      .subject-cell {
+        .subject-name {
+          font-weight: 600;
+          font-size: 14px;
+          margin-bottom: 4px;
+          color: #263238;
+        }
+      }
+
+      .ant-table-tbody {
+        .ant-table-row {
+          transition: all 0.3s ease;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+          
+          &:hover {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(66, 165, 245, 0.02) 100%);
+            transform: scale(1.001);
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
+          }
+          
+          &:nth-child(even) {
+            background: rgba(248, 250, 252, 0.5);
+          }
+
+          .ant-table-cell {
+            padding: 14px 10px;
+            font-size: 13px;
+            vertical-align: middle;
+            border-color: rgba(0, 0, 0, 0.06);
+
+            .ant-progress {
+              margin: 0;
+              
+              .ant-progress-outer {
+                .ant-progress-inner {
+                  background: rgba(224, 224, 224, 0.3);
+                  border-radius: 6px;
+                  
+                  .ant-progress-bg {
+                    border-radius: 6px;
+                    background: linear-gradient(90deg, #4caf50 0%, #81c784 100%);
+                    
+                    &[style*="100%"] {
+                      background: linear-gradient(90deg, #2e7d32 0%, #4caf50 100%);
+                    }
+                  }
+                }
+              }
+
+              .ant-progress-text {
+                font-size: 11px;
+                font-weight: 600;
+                color: #37474f;
+              }
+            }
+
+            .ant-tag {
+              margin: 0;
+              font-size: 11px;
+              padding: 3px 8px;
+              border-radius: 12px;
+              font-weight: 500;
+              border: none;
+              
+              &.ant-tag-red {
+                background: linear-gradient(135deg, #f44336 0%, #e57373 100%);
+                color: white;
+              }
+              
+              &.ant-tag-orange {
+                background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
+                color: white;
+              }
+              
+              &.ant-tag-green {
+                background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+                color: white;
+              }
+              
+              &.ant-tag-success {
+                background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+                color: white;
+              }
+              
+              &.ant-tag-processing {
+                background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+                color: white;
+              }
+              
+              &.ant-tag-error {
+                background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+                color: white;
+              }
+            }
+
+            .ant-btn {
+              transition: all 0.3s ease;
+              border-radius: 8px;
+              
+              &.ant-btn-primary {
+                font-size: 11px;
+                padding: 6px 12px;
+                height: auto;
+                font-weight: 600;
+                background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+                border: none;
+                box-shadow: 0 2px 6px rgba(25, 118, 210, 0.2);
+                
+                &:not(:disabled):hover {
+                  transform: translateY(-2px);
+                  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+                  background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+                }
+                
+                &:disabled {
+                  background: #e0e0e0;
+                  color: #9e9e9e;
+                  box-shadow: none;
+                }
+              }
+
+              &.ant-btn-text {
+                padding: 6px;
+                height: auto;
+                border-radius: 50%;
+                background: rgba(25, 118, 210, 0.1);
+                
+                &:hover {
+                  background: rgba(25, 118, 210, 0.2);
+                  transform: scale(1.1);
+                }
+                
+                .anticon {
+                  font-size: 14px;
+                  color: #1976d2;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .ant-table-thead {
+        .ant-table-cell {
+          background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+          font-weight: 700;
+          font-size: 12px;
+          padding: 12px 8px;
+          border-bottom: 3px solid rgba(25, 118, 210, 0.2);
+          color: #37474f;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          text-align: center;
+          
+          &:first-child {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+
+  .study-timer-modal {
+    .ant-modal-header {
+      background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+      border: none;
+      border-radius: 12px 12px 0 0;
+      
+      .ant-modal-title {
+        color: white;
+        font-weight: 700;
+        font-size: 18px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      
+      .ant-modal-close {
+        color: rgba(255, 255, 255, 0.85);
+        
+        &:hover {
+          color: white;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .ant-modal-body {
+      padding: 20px;
+      background: linear-gradient(135deg, #fafafa 0%, #f0f4f8 100%);
+      border-radius: 0 0 12px 12px;
+    }
+    
+    .ant-modal-content {
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+      border: none;
+      overflow: hidden;
+    }
+  }
+}
+
+// Dark mode
+.dark {
+  .daily-table {
+    .plan-summary {
+      .overall-progress {
+        border-color: #303030;
+      }
+    }
+
+    .subjects-table {
+      .subjects-table-content {
+        .ant-table-tbody {
+          .ant-table-row {
+            &:hover {
+              background-color: #262626;
+            }
+          }
+        }
+
+        .ant-table-thead {
+          .ant-table-cell {
+            background: #262626;
+            border-color: #434343;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mobile Responsive Enhancements
+@media (max-width: 768px) {
+  .daily-table {
+    padding: 8px;
+    
+    .plan-summary {
+      .ant-card-body {
+        padding: 12px;
+      }
+      
+      // Real-time sync header mobile optimization
+      .ant-row {
+        & > div:first-child {
+          flex-direction: column;
+          gap: 8px;
+          align-items: flex-start;
+          
+          .ant-badge {
+            font-size: 11px;
+          }
+        }
+        
+        & > div:last-child {
+          gap: 4px;
+          
+          .ant-btn {
+            padding: 4px;
+            
+            .anticon {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+      
+      .ant-col {
+        margin-bottom: 12px;
+        
+        .ant-statistic {
+          padding: 6px;
+          
+          .ant-statistic-title {
+            font-size: 10px;
+          }
+          
+          .ant-statistic-content-value {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .subjects-table {
+      .ant-card-head {
+        .ant-card-head-title {
+          font-size: 14px;
+        }
+      }
+      
+      .subjects-table-content {
+        .ant-table {
+          font-size: 11px;
+          
+          .ant-table-thead {
+            .ant-table-cell {
+              padding: 8px 3px;
+              font-size: 10px;
+              letter-spacing: 0.2px;
+            }
+          }
+
+          .ant-table-tbody {
+            .ant-table-cell {
+              padding: 10px 3px;
+              
+              // Subject cell mobile layout
+              .subject-cell {
+                .subject-name {
+                  font-size: 12px;
+                  margin-bottom: 2px;
+                }
+                
+                .ant-tag {
+                  font-size: 9px;
+                  padding: 1px 4px;
+                }
+              }
+              
+              // Progress bar mobile
+              .ant-progress {
+                .ant-progress-text {
+                  font-size: 9px;
+                }
+              }
+              
+              // Status tags mobile
+              .ant-tag {
+                font-size: 9px;
+                padding: 2px 6px;
+              }
+
+              // Action buttons mobile
+              .ant-btn {
+                font-size: 9px;
+                padding: 3px 6px;
+                height: 24px;
+                
+                &.ant-btn-primary {
+                  min-width: 50px;
+                }
+                
+                &.ant-btn-text {
+                  padding: 2px;
+                  width: 24px;
+                  height: 24px;
+                  
+                  .anticon {
+                    font-size: 10px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    // Timer modal mobile
+    .study-timer-modal {
+      .ant-modal-content {
+        margin: 10px;
+        border-radius: 8px;
+      }
+      
+      .ant-modal-header {
+        .ant-modal-title {
+          font-size: 16px;
+        }
+      }
+      
+      .ant-modal-body {
+        padding: 12px;
+      }
+    }
+  }
+}
+
+// Extra small screens (phones)
+@media (max-width: 480px) {
+  .daily-table {
+    padding: 4px;
+    
+    .plan-summary {
+      .ant-card-body {
+        padding: 8px;
+      }
+      
+      // Stack statistics vertically on very small screens
+      .ant-row {
+        .ant-col {
+          span: 24;
+          margin-bottom: 8px;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+      
+      .overall-progress {
+        margin-top: 12px;
+        padding: 8px;
+        
+        .ant-typography {
+          font-size: 12px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+    
+    .subjects-table {
+      // Horizontal scroll for table on very small screens
+      .subjects-table-content {
+        .ant-table {
+          .ant-table-thead {
+            .ant-table-cell {
+              white-space: nowrap;
+            }
+          }
+          
+          .ant-table-tbody {
+            .ant-table-cell {
+              white-space: nowrap;
+              
+              // Hide less critical columns on very small screens
+              &:nth-child(6), // Blank answers column
+              &:nth-child(8) { // Progress column 
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Landscape mobile orientation
+@media (max-width: 768px) and (orientation: landscape) {
+  .daily-table {
+    .plan-summary {
+      .ant-row {
+        .ant-col {
+          margin-bottom: 8px;
+        }
+      }
+    }
+    
+    .study-timer-modal {
+      .ant-modal-content {
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+    }
+  }
+}

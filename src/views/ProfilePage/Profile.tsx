@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Input, Button, Space, Typography, message, Row, Col, Avatar, Progress } from 'antd';
+import { Card, Form, Input, Button, Space, Typography, message, Row, Col, Avatar, Progress, Upload } from 'antd';
+import type { UploadProps } from 'antd';
 import { UserOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { useAuth } from '../../contexts/AuthContext';
-import { apiRequest } from '../../services/api';
+import { apiRequest, toAbsoluteUrl } from '../../services/api';
 
 const { Title, Text } = Typography;
 
@@ -15,10 +16,11 @@ interface UserProfile {
   bio?: string;
   role: string;
   profileCompleteness?: number;
+  avatar?: string | null;
 }
 
 const Profile: React.FC = () => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -91,6 +93,51 @@ const Profile: React.FC = () => {
     return <div>Yükleniyor...</div>;
   }
 
+  const uploadProps: UploadProps = {
+    name: 'avatar',
+    showUploadList: false,
+    accept: 'image/*',
+    beforeUpload: (file) => {
+      const isImage = file.type.startsWith('image/');
+      if (!isImage) {
+        message.error('Sadece resim dosyaları yükleyebilirsiniz');
+        return Upload.LIST_IGNORE as any;
+      }
+      const isLt1M = file.size / 1024 / 1024 < 1;
+      if (!isLt1M) {
+        message.error('Dosya boyutu 1MB altında olmalı');
+        return Upload.LIST_IGNORE as any;
+      }
+      return true;
+    },
+    customRequest: async ({ file, onSuccess, onError }) => {
+      try {
+        const formData = new FormData();
+        formData.append('avatar', file as File);
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:8000/api/users/avatar', {
+          method: 'POST',
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {})
+          },
+          body: formData
+        });
+        if (!res.ok) throw new Error('Yükleme başarısız');
+        const json = await res.json();
+        message.success('Avatar güncellendi');
+        await fetchProfile();
+        // NavBar avatar'ı da hemen güncelle
+        if (json?.avatar) {
+          updateUser({ avatar: json.avatar });
+        }
+        onSuccess && onSuccess(json as any);
+      } catch (e) {
+        message.error('Avatar yüklenemedi');
+        onError && onError(e as any);
+      }
+    }
+  };
+
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       <Title level={2}>
@@ -117,7 +164,14 @@ const Profile: React.FC = () => {
         <Row gutter={24}>
           {/* Sol Taraf - Avatar ve Temel Bilgiler */}
           <Col xs={24} md={6} style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <Avatar size={120} icon={<UserOutlined />} style={{ marginBottom: '16px' }} />
+            <Upload {...uploadProps}>
+              <div style={{ display: 'inline-block', cursor: 'pointer' }}>
+                <Avatar size={120} src={toAbsoluteUrl(profileData?.avatar) || undefined} icon={<UserOutlined />} style={{ marginBottom: '8px' }} />
+                <div>
+                  <Button size="small">Avatarı Değiştir</Button>
+                </div>
+              </div>
+            </Upload>
             <div>
               <Title level={4} style={{ margin: '8px 0' }}>
                 {profileData?.firstName && profileData?.lastName 

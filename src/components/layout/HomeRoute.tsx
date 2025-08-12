@@ -11,7 +11,7 @@ import { Spin } from 'antd'
  * - Auth kontrol ediliyor: Loading göster
  */
 const HomeRoute = () => {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading, user } = useAuth()
 
   // Auth durumu kontrol ediliyor - loading göster
   if (loading) {
@@ -29,8 +29,27 @@ const HomeRoute = () => {
     )
   }
 
-  // Kullanıcı login olmuşsa dashboard'a yönlendir
+  // Kullanıcı login olmuşsa rolüne göre yönlendir
   if (isAuthenticated) {
+    // role'u state'den, yoksa localStorage'dan al (yarış durumlarını önlemek için)
+    let role = user?.role as 'admin' | 'coach' | 'student' | undefined;
+    if (!role) {
+      try {
+        const raw = localStorage.getItem('user');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          role = parsed?.role;
+        }
+      } catch {}
+    }
+
+    if (role === 'coach') {
+      return <Navigate to="/coach-dashboard" replace />
+    }
+    if (role === 'admin') {
+      return <Navigate to="/admin-dashboard" replace />
+    }
+    // Student için mevcut dashboard
     return <Navigate to="/dashboard" replace />
   }
 

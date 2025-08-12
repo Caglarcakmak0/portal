@@ -12,13 +12,6 @@ const QuickActions: React.FC<QuickActionsProps> = ({ profileCompleteness = 0 }) 
 
   const actions = [
     {
-      key: 'study',
-      title: 'Çalışma Başlat',
-      icon: <ClockCircleOutlined style={{ fontSize: '24px', display: 'block', marginBottom: '8px' }} />,
-      onClick: () => navigate('/study-tracker'),
-      disabled: false
-    },
-    {
       key: 'goals',
       title: 'Hedef Ekle',
       icon: <AimOutlined style={{ fontSize: '24px', display: 'block', marginBottom: '8px' }} />,
@@ -38,7 +31,7 @@ const QuickActions: React.FC<QuickActionsProps> = ({ profileCompleteness = 0 }) 
     <Card title="Hızlı Eylemler">
       <Row gutter={[16, 16]}>
         {actions.map((action) => (
-          <Col xs={24} md={8} key={action.key}>
+          <Col xs={24} md={12} key={action.key}>
             <Button 
               size="large"
               style={{ width: '100%', height: '80px' }}

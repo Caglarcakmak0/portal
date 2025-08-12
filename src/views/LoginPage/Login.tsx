@@ -24,8 +24,8 @@ const Login = () => {
   useEffect(() => {
     // Eğer auth loading tamamlandıysa ve kullanıcı login olmuşsa
     if (!authLoading && isAuthenticated) {
-      // Kullanıcıyı dashboard'a yönlendir
-      navigate('/dashboard', { replace: true }) // replace: true -> geri butonu ile login sayfasına dönmesin
+      // Rol bazlı yönlendirme için HomeRoute'a gönder
+      navigate('/', { replace: true }) // replace: true -> geri butonu ile login sayfasına dönmesin
     }
 
     // Remember Me verilerini kontrol et ve formu doldur
@@ -64,7 +64,8 @@ const Login = () => {
       rememberMeService.setRememberMe(values.email, !!values.rememberMe);
       
       message.success('Giriş başarılı!')
-      navigate('/dashboard')
+      // Rol bazlı yönlendirme: HomeRoute üzerinden
+      navigate('/')
     } catch (error) {
       message.error((error as Error).message || 'Giriş yapılırken bir hata oluştu')
       console.error('Login error:', error)

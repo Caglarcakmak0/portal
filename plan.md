@@ -1,6 +1,41 @@
 
 ⏺ Detaylı Koç-Öğrenci Yönetim Sistemi Planı
 
+Durum Özeti
+
+Yapılmayanlar (Öncelik)
+- [ ] Admin API'leri (istatistikler): GET /api/admin/statistics/coaches, GET /api/admin/statistics/feedback-summary
+- [ ] Frontend - Öğrenci Paneli: /student/coach -> ActivePrograms.tsx, ProgramDetail.tsx
+- [ ] Frontend - Admin Paneli: CoachesList.tsx, CoachDetail.tsx, AssignmentManager.tsx, Statistics.tsx ve ilgili rotalar
+- [ ] Frontend - Koç Paneli: StudentsList.tsx, CreateProgram.tsx, StudentDetail.tsx
+- [ ] Rate limiting (login ve API istek limitleri)
+- [ ] Test senaryoları (Güvenlik, İşlevsellik, Edge, Performance, E2E, UI/UX)
+- [ ] Notification sistemi (ileride)
+- [ ] Component hiyerarşisi izolasyonunun tamamlanması (role-specific klasör/komponentler)
+
+
+Yapılanlar
+- [x] Database modelleri: CoachStudent, CoachFeedback, StudyProgram, CoachPerformance
+- [x] Koç API'leri: GET /api/coach/students, GET /api/coach/students/:studentId, GET /api/coach/programs, PUT /api/coach/programs/:id
+- [x] Admin API'leri: POST /api/admin/assign-coach, PUT /api/admin/reassign-student
+- [x] Güvenlik: checkRole middleware ve kaynak sahipliği kontrolleri (koç kendi öğrencisi, program ownership)
+- [x] Sensitive data filtering: kritik alanlar response'lardan çıkarılıyor (örn. şifre/refresh token)
+- [x] Menü sistemi (role-based): Öğrenci/Koç/Admin menüleri ayrıldı; admin/koç menülerinde öğrenci sayfaları yok
+- [x] Portal temizliği (Koç): CoachDashboard'tan gamification ve ilgili ikon importları kaldırıldı
+- [x] Frontend rotaları: ProtectedRoute ile role bazlı koruma; CoachDashboard ve ProgramManager aktif
+- [x] Bug fix: DailyTable’da subject.description alanı ve görünümü eklendi (öğrenci tarafında açıklama görünüyor)
+- [x] Ek: Koç program oluşturma endpoint'i POST /api/daily-plans/coach-create (plan dışı; POST /api/coach/programs yerine)
+- [x] Ek: Koç öğrenci raporları endpoint'i GET /api/daily-plans/coach/student-reports (öğrenci günlük feedback görünümü)
+ - [x] Öğrenci API'leri: GET /api/student/my-coach, GET /api/student/programs, GET /api/student/programs/:id, POST /api/student/feedback/coach
+ - [x] Koç API'leri: POST /api/coach/programs, DELETE /api/coach/programs/:id (sahiplik kontrolü ve admin override)
+ - [x] Admin API'leri: GET /api/admin/coaches, GET /api/admin/coaches/:id/performance, GET /api/admin/coaches/:id/students, GET /api/admin/feedbacks, GET /api/admin/feedbacks/:id, PUT /api/admin/feedbacks/:id/read
+ - [x] Güvenlik middleware: blockCoachFromFeedback, validateOwnCoach
+ - [x] OpenAPI/Swagger entegrasyonu (JWT bearerAuth; /api-docs üzerinden canlı dokümantasyon)
+ - [x] CoachPerformance arkaplan işi (periyodik özet) ve `server.js` entegrasyonu
+ - [x] Frontend - Öğrenci Paneli: /student/coach -> CoachProfile.tsx, SecretFeedbackForm.tsx
+ - [x] Frontend - Öğrenci Paneli: Program listesi ve detay (StudentPrograms.tsx, StudentProgramDetail.tsx; rota: /student/programs/:id; Coach sayfasına entegre)
+ - [x] Geçmiş programları listeleme (koç ve admin): GET /api/coach/programs (admin için coachId ile filtrelenebilir), tarih filtresi destekli
+
   1. Database Schema Tasarımı
 
   A) CoachStudent Model (Koç-Öğrenci İlişkisi) - MVP
@@ -24,7 +59,7 @@
     coachId: { type: ObjectId, ref: 'Users', required: true },
     studentId: { type: ObjectId, ref: 'Users', required: true },
 
-    // Değerlendirme detayları (MVP - 3 kategori)
+    // Değerlendirme detayları (MVP - 3 kategori)   
     categories: {
       communication: {
         type: Number,
@@ -166,6 +201,8 @@
   PUT /api/coach/programs/:id
   DELETE /api/coach/programs/:id
 
+   Not: Koç, öğrenciye gönderildikten sonra da programı güncelleyebilir (PUT). Yetki yalnızca programın koçunda (coachId eşleşmeli) veya admin'de olmalıdır. Güncelleme sonrası DailyPlan senkronizasyonu ve öğrenciye bilgilendirme (ileride) planlanacaktır.
+
 
   Admin API'leri
 
@@ -216,6 +253,9 @@
     - ProgramManager.tsx
     - CreateProgram.tsx
     - StudentDetail.tsx
+
+  ProgramManager Notu:
+    - Mevcut programı düzenleme (öğrenciye gönderildikten sonra da). Öğrenci tarafında plan ekranı otomatik güncellenir.
 
   Components:
     - StudentCard
@@ -443,6 +483,10 @@
     - Kullanıcı sadece kendi verilerine erişebilir
     - Koç sadece kendi öğrencilerinin verilerine erişebilir
     - Admin tüm verilere erişebilir
+
+     2.1 Program Ownership:
+       - PUT / DELETE program işlemlerinde program.coachId === req.user.userId olmalı (veya admin)
+       - Öğrenci program içeriğini düzenleyemez; yalnızca kendi progres verilerini günceller
     
     3. Sensitive Data Protection:
     - Feedback'ler koçlardan gizlenir
@@ -482,6 +526,7 @@
        - Koç program oluşturabilmeli
        - Öğrenci programı görüntüleyebilmeli
        - Öğrenci program onaylayabilmeli
+      - Koç, öğrenciye gönderilmiş bir programı (PUT) güncelleyebilmeli; öğrenci güncel halini görmeli
     
     3. Gizli Feedback:
        - Öğrenci koç değerlendirmesi gönderebilmeli
