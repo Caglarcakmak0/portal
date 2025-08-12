@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Menu, Button, Avatar, Typography, Dropdown, Badge, Tooltip, Breadcrumb } from 'antd';
+import { Layout, Menu, Button, Avatar, Typography, Dropdown, Badge, Tooltip, Breadcrumb, Segmented } from 'antd';
 import {
   AimOutlined,
   SettingOutlined,
@@ -10,13 +10,14 @@ import {
   UserOutlined,
   SunOutlined,
   MoonOutlined,
-  BulbOutlined
+  
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { getPageTitle, getRouteMenuByRole } from '../../../routes/routeMenu';
 import { toAbsoluteUrl } from '../../../services/api';
+import { useDesign } from '../../../contexts/DesignContext';
 
 const { Header, Sider, Content } = Layout;
 const { Text } = Typography;
@@ -32,6 +33,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const location = useLocation();
   const { user, logout } = useAuth();
   const { themeMode, isDark, toggleTheme } = useTheme();
+  const { designMode, setDesignMode } = useDesign();
   
   // Get role-based menu items
   const menuItems = getRouteMenuByRole(user?.role);
@@ -72,31 +74,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   ];
 
   // Tema toggle butonu
-  const getThemeIcon = () => {
-    switch (themeMode) {
-      case 'light':
-        return <SunOutlined />;
-      case 'dark':
-        return <MoonOutlined />;
-      case 'auto':
-        return <BulbOutlined />;
-      default:
-        return <SunOutlined />;
-    }
-  };
+  const getThemeIcon = () => (themeMode === 'light' ? <SunOutlined /> : <MoonOutlined />);
 
-  const getThemeTooltip = () => {
-    switch (themeMode) {
-      case 'light':
-        return 'Light Mode - Dark Mode\'a geçmek için tıkla';
-      case 'dark':
-        return 'Dark Mode - Auto Mode\'a geçmek için tıkla';
-      case 'auto':
-        return 'Auto Mode - Light Mode\'a geçmek için tıkla';
-      default:
-        return 'Tema değiştir';
-    }
-  };
+  const getThemeTooltip = () => (themeMode === 'light' ? "Light Mode - Dark'a geç" : "Dark Mode - Light'a geç");
 
   // Aktif menü key'ini belirle
   const getSelectedMenuKey = () => {
@@ -133,6 +113,40 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     return items;
   }, [location.pathname, menuItems]);
 
+  const headerClassName = React.useMemo(() => {
+    switch (designMode) {
+      case 'neon':
+        return 'neon-header';
+      case 'soft':
+        return 'soft-header';
+      default:
+        return 'soft-header';
+    }
+  }, [designMode]);
+
+  const contentClassName = React.useMemo(() => {
+    const base = 'app-fade-in';
+    switch (designMode) {
+      case 'neon':
+        return `${base} neon-content`;
+      case 'soft':
+        return `${base} soft-content`;
+      default:
+        return `${base} soft-content`;
+    }
+  }, [designMode]);
+
+  const siderClassName = React.useMemo(() => {
+    switch (designMode) {
+      case 'neon':
+        return 'neon-sider';
+      case 'soft':
+        return 'soft-sider';
+      default:
+        return 'soft-sider';
+    }
+  }, [designMode]);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {/* Sidebar */}
@@ -141,10 +155,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         collapsible 
         collapsed={collapsed}
         width={250}
-        style={{
-          background: isDark ? '#1f1f1f' : '#fff',
-          borderRight: `1px solid ${isDark ? '#434343' : '#f0f0f0'}`
-        }}
+        className={siderClassName}
       >
         {/* Logo/Brand */}
         <div style={{ 
@@ -177,7 +188,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           onClick={handleMenuClick}
           style={{ 
             border: 'none',
-            height: 'calc(100vh - 64px)'
+            height: 'calc(100vh - 64px)',
+            background: 'transparent'
           }}
         />
       </Sider>
@@ -185,10 +197,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       {/* Main Layout */}
       <Layout>
         {/* Header */}
-        <Header style={{ 
-          padding: '0 24px', 
-          background: isDark ? '#1f1f1f' : '#fff',
-          borderBottom: `1px solid ${isDark ? '#434343' : '#f0f0f0'}`,
+        <Header className={headerClassName} style={{ 
+          padding: '0 24px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between'
@@ -219,6 +229,16 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
           {/* Sağ taraf - User info */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            {/* Design switch (deneysel) */}
+            <Segmented
+              value={designMode}
+              onChange={(val) => setDesignMode(val as any)}
+              options={[
+                { label: 'Soft', value: 'soft' },
+                { label: 'Neon', value: 'neon' },
+              ]}
+              size="small"
+            />
             {/* Theme Toggle */}
             <Tooltip title={getThemeTooltip()}>
               <Button
@@ -282,15 +302,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         </Header>
 
         {/* Content */}
-        <Content style={{ 
+        <Content className={contentClassName} style={{ 
           margin: '24px',
           padding: '24px',
-          background: isDark ? '#0f1419' : '#f5f5f5',
-          borderRadius: '8px',
           overflow: 'auto'
-        }}
-          className="app-fade-in"
-        >
+        }}>
           {children}
         </Content>
       </Layout>

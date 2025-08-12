@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-export type ThemeMode = 'light' | 'dark' | 'auto';
+export type ThemeMode = 'light' | 'dark';
 
 interface ThemeContextType {
   themeMode: ThemeMode;
@@ -25,25 +25,11 @@ interface ThemeProviderProps {
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [themeMode, setThemeMode] = useState<ThemeMode>('light');
-  const [systemPrefersDark, setSystemPrefersDark] = useState(false);
-
-  // Sistem tercihini dinle
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setSystemPrefersDark(mediaQuery.matches);
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setSystemPrefersDark(e.matches);
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
 
   // localStorage'dan tema tercihini yükle
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as ThemeMode;
-    if (savedTheme && ['light', 'dark', 'auto'].includes(savedTheme)) {
+    if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
       setThemeMode(savedTheme);
     }
   }, []);
@@ -54,22 +40,19 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, [themeMode]);
 
   // Aktif tema durumunu hesapla
-  const isDark = themeMode === 'dark' || (themeMode === 'auto' && systemPrefersDark);
+  const isDark = themeMode === 'dark';
 
   const toggleTheme = () => {
-    setThemeMode(prevMode => {
-      switch (prevMode) {
-        case 'light':
-          return 'dark';
-        case 'dark':
-          return 'auto';
-        case 'auto':
-          return 'light';
-        default:
-          return 'light';
-      }
-    });
+    setThemeMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
   };
+
+  // Body class for advanced theming hooks
+  useEffect(() => {
+    const classes = ['theme-light', 'theme-dark'];
+    document.body.classList.remove(...classes);
+    const current = `theme-${themeMode}`;
+    document.body.classList.add(current);
+  }, [themeMode]);
 
   const value: ThemeContextType = {
     themeMode,
